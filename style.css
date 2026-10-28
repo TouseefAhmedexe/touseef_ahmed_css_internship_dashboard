@@ -378,3 +378,116 @@
     }
 }
 
+
+@layer components {
+    .button,
+    button {
+        background-color: var(--color-primary);
+        border: 2px solid var(--color-primary);
+        border-radius: var(--radius-sm);
+        color: var(--color-on-primary);
+        cursor: pointer;
+        display: inline-block;
+        padding: 0.7em 1.4em;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        user-select: none;
+
+        &:hover {
+            background-color: var(--color-primary-strong);
+            border-color: var(--color-primary-strong);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        &:active {
+            transform: scale(0.96);
+        }
+    }
+
+    button[type="reset"] {
+        background-color: transparent;
+        color: var(--color-primary);
+    }
+
+    button[type="reset"]:hover {
+        background-color: var(--color-surface-alt);
+        color: var(--color-primary-strong);
+    }
+
+    .button-light {
+        background-color: white;
+        border-color: white;
+        color: #0f2f73;
+        justify-self: start;
+    }
+
+    .button-light:hover {
+        background-color: #ffd54f;
+        border-color: #ffd54f;
+        color: #0f2f73;
+    }
+
+    .welcome-panel {
+        background:
+            radial-gradient(circle at 85% 20%, rgba(255, 213, 79, 0.35), transparent 40%),
+            linear-gradient(135deg, #0f2f73, #1b4db3);
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), 0 100%);
+        color: white;
+        display: grid;
+        gap: var(--space-md);
+        margin-block-end: var(--space-lg);
+        padding: var(--space-lg);
+        padding-block-end: calc(var(--space-lg) + 1.5rem);
+    }
+
+    .glass-card {
+        --bar-fill: #ffd54f;
+        --bar-track: rgba(255, 255, 255, 0.3);
+        background-color: rgba(7, 20, 50, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: var(--radius-md);
+        display: grid;
+        gap: var(--space-sm);
+        padding: var(--space-md);
+    }
+
+    @supports (backdrop-filter: blur(8px)) {
+        .glass-card {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+    }
+
+    .progress-bar {
+        background-color: var(--bar-track, var(--color-surface-alt));
+        block-size: 1rem;
+        border-radius: var(--radius-pill);
+        overflow: hidden;
+        position: relative;
+
+        &::before {
+            animation: progress-grow 1.5s ease-out 0.3s 1 normal backwards running;
+            background-color: var(--bar-fill, var(--color-primary));
+            block-size: 100%;
+            border-radius: var(--radius-pill);
+            content: "";
+            inline-size: var(--value, 0%);
+            inset-block-start: 0;
+            inset-inline-start: 0;
+            position: absolute;
+        }
+    }
+
+    .progress-50 {
+        --value: 50%;
+    }
+
+    @keyframes progress-grow {
+        from {
+            inline-size: 0;
+        }
+    }
+}
+
