@@ -41,7 +41,7 @@ A later layer always beats an earlier one, so no !important is needed.
 - :has() for the theme switch, the required stars, the form states and the pending table rows
 
 ## Container query
-Each stat card sits inside a .widget with container-type: inline-size. When the widget is 16rem
+Each stat-card sits inside a .widget with container-type: inline-size. When the widget is 16rem
 wide or more, the card changes its layout. The big number uses the cqi unit. At desktop width the
 cards stack, because each widget is narrow there. At tablet width they are wider, so the number
 sits beside the note. The layout follows the container, not the window.
@@ -54,7 +54,6 @@ sits beside the note. The layout follows the container, not the window.
 ## Other features
 - @supports: the glass card uses backdrop-filter only if the browser supports it.
 - Counter: the application steps are numbered with counter-reset and counter-increment.
-- Generated content: the notification number uses attr(data-count).
 - Columns: the About text uses column-count, column-width, column-gap, column-rule, column-span
   and break-inside.
 - Logical properties: inline-size, margin-inline, padding-block, inset-inline-end and
