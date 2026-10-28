@@ -491,3 +491,77 @@
     }
 }
 
+
+@layer components {
+    .stat-grid {
+        display: grid;
+        gap: var(--space-md);
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    }
+
+    .widget {
+        container-name: stat-widget;
+        container-type: inline-size;
+    }
+
+    .stat-card {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-inline-start: 6px solid var(--card-accent, var(--color-primary));
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        display: grid;
+        gap: var(--space-xs);
+        padding: var(--space-md);
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        &:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        & h3 {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-small);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        & .stat-number {
+            color: var(--card-accent, var(--color-primary));
+            font-size: clamp(2rem, 14cqi, 3.5rem);
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        & .stat-note {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-small);
+        }
+    }
+
+    .stat-pending {
+        --card-accent: var(--color-warning);
+    }
+
+    .stat-accepted {
+        --card-accent: var(--color-success);
+    }
+
+    .stat-rejected {
+        --card-accent: var(--color-danger);
+    }
+
+    @container stat-widget (min-width: 16rem) {
+        .stat-card {
+            align-items: center;
+            column-gap: var(--space-md);
+            grid-template-columns: auto 1fr;
+        }
+
+        .stat-card h3 {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
