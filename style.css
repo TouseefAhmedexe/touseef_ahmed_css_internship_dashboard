@@ -1,9 +1,11 @@
+/*Cascade Layers Order Declaration*/
 @layer reset, base, components, utilities, overrides;
 
 @layer components {
     @layer layout, header, widgets, table, form;
 }
 
+/*Reset Layer*/
 @layer reset {
     *,
     *::before,
@@ -29,7 +31,9 @@
     }
 }
 
+/*Base Layer & Theme Tokens*/
 @layer base {
+    /* Default Light Tokens */
     :root {
         --color-bg: #f3f6fb;
         --color-surface: #ffffff;
@@ -49,9 +53,11 @@
         --color-gold: #ffd54f;
         --color-badge-red: #b3261e;
         --color-header-text: #ffffff;
+        --color-selection-text: #1b2733;
 
-        --header-start: #0f2f73;
-        --header-end: #2f6fed;
+        --header-gradient: linear-gradient(135deg, #0f2f73, #2f6fed);
+        --header-bg-start: #0f2f73;
+        --header-bg-end: #2f6fed;
 
         --space-xs: 0.25rem;
         --space-sm: 0.5rem;
@@ -76,56 +82,16 @@
         --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.25);
 
         --width-page: 80rem;
-        --breakpoint-desktop: 72rem;
         --header-height: 5rem;
         --size-avatar: 4rem;
         --size-badge: 1.4rem;
+        --size-step-number: 2.25rem;
+        --size-status-dot: 0.5rem;
+        --clip-panel-offset: 1.5rem;
     }
 
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --color-bg: #0f1722;
-            --color-surface: #17212f;
-            --color-surface-alt: #1f2d42;
-            --color-text: #e6edf5;
-            --color-text-muted: #a8b5c4;
-            --color-primary: #7aa7ff;
-            --color-primary-strong: #a9c4ff;
-            --color-on-primary: #0b1220;
-            --color-accent: #fbbf24;
-            --color-border: #33445c;
-            --color-success: #4ade80;
-            --color-warning: #fbbf24;
-            --color-danger: #f87171;
-            --color-link-visited: #c4a8ff;
-            --color-link-hover: #fbbf24;
-            --color-badge-red: #f87171;
-            --header-start: #0b1b3f;
-            --header-end: #1b3f8f;
-        }
-
-        :root:has(#theme-toggle:not(:checked)) {
-            --color-bg: #f3f6fb;
-            --color-surface: #ffffff;
-            --color-surface-alt: #e8f0fe;
-            --color-text: #1b2733;
-            --color-text-muted: #4b5a69;
-            --color-primary: #1b4db3;
-            --color-primary-strong: #0f2f73;
-            --color-on-primary: #ffffff;
-            --color-accent: #d97706;
-            --color-border: #c5d0e3;
-            --color-success: #1f7a3d;
-            --color-warning: #a85a00;
-            --color-danger: #b3261e;
-            --color-link-visited: #6a3fb5;
-            --color-link-hover: #b8420d;
-            --color-badge-red: #b3261e;
-            --header-start: #0f2f73;
-            --header-end: #2f6fed;
-        }
-    }
-
+    /* Shared Dark Palette Definition */
+    html[data-theme="dark"],
     :root:has(#theme-toggle:checked) {
         --color-bg: #0f1722;
         --color-surface: #17212f;
@@ -143,8 +109,38 @@
         --color-link-visited: #c4a8ff;
         --color-link-hover: #fbbf24;
         --color-badge-red: #f87171;
-        --header-start: #0b1b3f;
-        --header-end: #1b3f8f;
+        --color-selection-text: #0b1220;
+
+        --header-gradient: linear-gradient(135deg, #0b1b3f, #1b3f8f);
+        --header-bg-start: #0b1b3f;
+        --header-bg-end: #1b3f8f;
+    }
+
+    /* System Preference Media Query for Automatic Dark Mode */
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+            --color-bg: #0f1722;
+            --color-surface: #17212f;
+            --color-surface-alt: #1f2d42;
+            --color-text: #e6edf5;
+            --color-text-muted: #a8b5c4;
+            --color-primary: #7aa7ff;
+            --color-primary-strong: #a9c4ff;
+            --color-on-primary: #0b1220;
+            --color-accent: #fbbf24;
+            --color-border: #33445c;
+            --color-success: #4ade80;
+            --color-warning: #fbbf24;
+            --color-danger: #f87171;
+            --color-link-visited: #c4a8ff;
+            --color-link-hover: #fbbf24;
+            --color-badge-red: #f87171;
+            --color-selection-text: #0b1220;
+
+            --header-gradient: linear-gradient(135deg, #0b1b3f, #1b3f8f);
+            --header-bg-start: #0b1b3f;
+            --header-bg-end: #1b3f8f;
+        }
     }
 
     html {
@@ -203,10 +199,11 @@
 
     ::selection {
         background-color: var(--color-accent);
-        color: var(--color-text);
+        color: var(--color-selection-text);
     }
 }
 
+/*Components Layer (Sub-layered)*/
 @layer components.layout {
     .page-container {
         inline-size: min(100% - 2 * var(--space-md), var(--width-page));
@@ -284,7 +281,7 @@
         align-items: center;
         background:
             radial-gradient(circle at 85% 0%, rgba(255, 255, 255, 0.2), transparent 45%),
-            linear-gradient(135deg, var(--header-start), var(--header-end));
+            var(--header-gradient);
         color: var(--color-header-text);
         display: flex;
         flex-direction: column;
@@ -464,14 +461,14 @@
     .welcome-panel {
         background:
             radial-gradient(circle at 85% 20%, rgba(255, 213, 79, 0.35), transparent 40%),
-            linear-gradient(135deg, var(--header-start), var(--header-end));
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), 0 100%);
+            var(--header-gradient);
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--clip-panel-offset)), 0 100%);
         color: var(--color-header-text);
         display: grid;
         gap: var(--space-md);
         margin-block-end: var(--space-lg);
         padding: var(--space-lg);
-        padding-block-end: calc(var(--space-lg) + 1.5rem);
+        padding-block-end: calc(var(--space-lg) + var(--clip-panel-offset));
     }
 
     .glass-card {
@@ -485,8 +482,10 @@
         padding: var(--space-md);
     }
 
-    @supports (backdrop-filter: blur(8px)) {
+    /*Safari Prefix Added alongside standard backdrop-filter*/
+    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
         .glass-card {
+            -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
             background-color: rgba(255, 255, 255, 0.15);
         }
@@ -615,13 +614,13 @@
 
             &::before {
                 background-color: var(--color-primary);
-                block-size: 2.25rem;
+                block-size: var(--size-step-number);
                 border-radius: 50%;
                 color: var(--color-on-primary);
                 content: counter(step);
                 display: grid;
                 font-weight: var(--font-weight-bold);
-                inline-size: 2.25rem;
+                inline-size: var(--size-step-number);
                 place-items: center;
             }
 
@@ -696,10 +695,10 @@
 
         &::before {
             background-color: currentColor;
-            block-size: 0.5rem;
+            block-size: var(--size-status-dot);
             border-radius: 50%;
             content: "";
-            inline-size: 0.5rem;
+            inline-size: var(--size-status-dot);
         }
     }
 
@@ -856,7 +855,7 @@
     }
 
     #page-footer {
-        background: linear-gradient(135deg, var(--header-start), var(--header-end));
+        background: var(--header-gradient);
         color: var(--color-header-text);
         padding-block: var(--space-lg);
 
@@ -872,6 +871,7 @@
     }
 }
 
+/*Utilities Layer*/
 @layer utilities {
     .text-center {
         text-align: center;
@@ -882,6 +882,7 @@
     }
 }
 
+/*Overrides Layer*/
 @layer overrides {
     @media (prefers-reduced-motion: reduce) {
         *,

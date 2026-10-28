@@ -8,31 +8,30 @@ Task 9 of my Bloomrix internship. No JavaScript is used.
 - style.css - all the styling
 - images/profile.jpg - photo in the header
 
-## Variable System
-All colors, spacing, font sizes, font weights, line heights, radii, shadows and layout breakpoints are custom properties declared in `:root`. Components consume `var()` tokens cleanly.
+## Token System & Architecture
+All colors, spacing, font sizes, font weights, line heights, radii, shadows, gradients, and layout dimensions are custom properties declared in `:root`.
 
-## Themes
-- **Light theme:** Default tokens declared in `:root`.
-- **Dark theme:** Toggled automatically via `prefers-color-scheme: dark` or manually using `:root:has(#theme-toggle:checked)`.
-- **Symmetric Control:** Unchecking `#theme-toggle` on a dark-preference OS enforces Light mode (`:root:has(#theme-toggle:not(:checked))`).
+## Theming Logic
+- **Automatic System Preference:** `prefers-color-scheme: dark` automatically maps to the dark token palette without overriding default light mode behavior.
+- **Manual Toggle Override:** Manual themes use attribute selector rules (`html[data-theme="dark"]` / `#theme-toggle:checked`) to override OS preferences without breaking automatic system mode detection.
 
 ## Native CSS Nesting
-Native CSS nesting (`& > main`, `& h2`, `&::after`) is used directly in component rules. Supported across all major modern browsers (Chrome 112+, Firefox 117+, Safari 16.5+).
+Native CSS nesting is used across component sub-layers (`& > main`, `& h2`, `&::after`).
 
 ## Cascade Layers
-Declared in exact order: `@layer reset, base, components, utilities, overrides;`
+Order declared: `@layer reset, base, components, utilities, overrides;`
 - `reset`: `box-sizing` and margin resets via `:where()`.
 - `base`: Variable tokens, themes, typography, and focus ring settings.
 - `components`: Divided into named sub-layers (`layout`, `header`, `widgets`, `table`, `form`).
-- `utilities`: Small helper utility classes (`.text-center`, `.text-muted`).
+- `utilities`: Helper classes (`.text-center`, `.text-muted`).
 - `overrides`: Top-priority accessibility overrides (`prefers-reduced-motion`, `prefers-contrast`).
 
 ## Container Queries
-Stat-card wrappers (`.widget`) configure `container-type: inline-size`. Card typography uses `cqi` units and adapts into a multi-column flex layout when crossing 16rem width.
+Stat-card wrappers (`.widget`) configure `container-type: inline-size`. Card typography scales dynamically with `cqi` units.
 
 ## DevTools Testing Evidence
-- **Viewport Testing:** Tested in Chrome DevTools at `375px` (mobile stack), `768px` (tablet flex), and `1280px` (desktop sticky side-panel).
-- **Theme & Motion Testing:** Simulated `prefers-color-scheme: dark` and `prefers-reduced-motion: reduce` in the DevTools Rendering panel to verify zero-animation rules and high-contrast color token swaps.
+- **Viewport Testing:** Verified in Chrome DevTools at `375px` (mobile stack), `768px` (tablet flex), and `1280px` (desktop sticky side-panel).
+- **Theme & Accessibility:** Simulated `prefers-color-scheme: dark` and `prefers-reduced-motion: reduce` in the Rendering tab.
 
 ## How to Run
 Open index.html with Live Server in Visual Studio Code, or in any web browser.
