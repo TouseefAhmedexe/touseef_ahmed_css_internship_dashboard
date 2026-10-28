@@ -801,3 +801,53 @@
     }
 }
 
+
+@layer components {
+    a[target="_blank"]::after {
+        content: " \2197";
+    }
+
+    a[href^="mailto"]::before {
+        content: "\2709  ";
+    }
+
+    .columns-text {
+        column-count: 3;
+        column-gap: var(--space-xl);
+        column-rule: 2px dotted var(--color-border);
+        column-width: 15rem;
+
+        & .column-title {
+            column-span: all;
+            margin-block-end: var(--space-md);
+        }
+
+        & p {
+            margin-block-end: var(--space-md);
+        }
+
+        & .note-box {
+            background-color: var(--color-surface-alt);
+            border-inline-start: 4px solid var(--color-accent);
+            break-inside: avoid;
+            padding: var(--space-md);
+        }
+    }
+
+    #page-footer {
+        background: linear-gradient(135deg, var(--header-start), var(--header-end));
+        color: white;
+        padding-block: var(--space-lg);
+
+        & a {
+            color: #ffd54f;
+            text-decoration: none;
+        }
+
+        & a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    }
+}
+
