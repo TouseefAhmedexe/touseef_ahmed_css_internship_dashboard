@@ -1,0 +1,28 @@
+@layer reset, base, components, utilities, overrides;
+
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    :where(body, h1, h2, h3, p, ul, ol, blockquote, address) {
+        margin: 0;
+    }
+
+    :where(ul, ol) {
+        padding: 0;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    :where(button, input, select, textarea) {
+        font: inherit;
+    }
+}
+
