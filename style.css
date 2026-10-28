@@ -1,7 +1,10 @@
 @layer reset, base, components, utilities, overrides;
 
-@layer reset {
+@layer components {
+    @layer layout, header, widgets, table, form;
+}
 
+@layer reset {
     *,
     *::before,
     *::after {
@@ -26,7 +29,6 @@
     }
 }
 
-
 @layer base {
     :root {
         --color-bg: #f3f6fb;
@@ -44,6 +46,10 @@
         --color-danger: #b3261e;
         --color-link-visited: #6a3fb5;
         --color-link-hover: #b8420d;
+        --color-gold: #ffd54f;
+        --color-badge-red: #b3261e;
+        --color-header-text: #ffffff;
+
         --header-start: #0f2f73;
         --header-end: #2f6fed;
 
@@ -57,6 +63,10 @@
         --font-size-base: 1rem;
         --font-size-small: 0.875rem;
         --font-size-title: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
+        --font-weight-bold: 700;
+        --line-height-base: 1.6;
+        --line-height-tight: 1.2;
+        --letter-spacing-wide: 1px;
 
         --radius-sm: 6px;
         --radius-md: 12px;
@@ -66,6 +76,7 @@
         --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.25);
 
         --width-page: 80rem;
+        --breakpoint-desktop: 72rem;
         --header-height: 5rem;
         --size-avatar: 4rem;
         --size-badge: 1.4rem;
@@ -88,8 +99,30 @@
             --color-danger: #f87171;
             --color-link-visited: #c4a8ff;
             --color-link-hover: #fbbf24;
+            --color-badge-red: #f87171;
             --header-start: #0b1b3f;
             --header-end: #1b3f8f;
+        }
+
+        :root:has(#theme-toggle:not(:checked)) {
+            --color-bg: #f3f6fb;
+            --color-surface: #ffffff;
+            --color-surface-alt: #e8f0fe;
+            --color-text: #1b2733;
+            --color-text-muted: #4b5a69;
+            --color-primary: #1b4db3;
+            --color-primary-strong: #0f2f73;
+            --color-on-primary: #ffffff;
+            --color-accent: #d97706;
+            --color-border: #c5d0e3;
+            --color-success: #1f7a3d;
+            --color-warning: #a85a00;
+            --color-danger: #b3261e;
+            --color-link-visited: #6a3fb5;
+            --color-link-hover: #b8420d;
+            --color-badge-red: #b3261e;
+            --header-start: #0f2f73;
+            --header-end: #2f6fed;
         }
     }
 
@@ -109,11 +142,13 @@
         --color-danger: #f87171;
         --color-link-visited: #c4a8ff;
         --color-link-hover: #fbbf24;
+        --color-badge-red: #f87171;
         --header-start: #0b1b3f;
         --header-end: #1b3f8f;
     }
 
     html {
+        background-color: var(--color-bg);
         scroll-behavior: smooth;
     }
 
@@ -122,11 +157,11 @@
         color: var(--color-text);
         font-family: var(--font-body);
         font-size: var(--font-size-base);
-        line-height: 1.6;
+        line-height: var(--line-height-base);
     }
 
     :where(h1, h2, h3) {
-        line-height: 1.2;
+        line-height: var(--line-height-tight);
     }
 
     h1 {
@@ -168,12 +203,11 @@
 
     ::selection {
         background-color: var(--color-accent);
-        color: #1b2733;
+        color: var(--color-text);
     }
 }
 
-
-@layer components {
+@layer components.layout {
     .page-container {
         inline-size: min(100% - 2 * var(--space-md), var(--width-page));
         margin-inline: auto;
@@ -245,14 +279,13 @@
     }
 }
 
-
-@layer components {
+@layer components.header {
     #dashboard-header {
         align-items: center;
         background:
             radial-gradient(circle at 85% 0%, rgba(255, 255, 255, 0.2), transparent 45%),
             linear-gradient(135deg, var(--header-start), var(--header-end));
-        color: white;
+        color: var(--color-header-text);
         display: flex;
         flex-direction: column;
         gap: var(--space-md);
@@ -280,7 +313,7 @@
     .avatar {
         aspect-ratio: 1;
         block-size: var(--size-avatar);
-        border: 3px solid white;
+        border: 3px solid var(--color-header-text);
         border-radius: 50%;
         box-shadow: var(--shadow-md);
         filter: grayscale(0.6);
@@ -305,7 +338,7 @@
 
         & a {
             border-radius: var(--radius-sm);
-            color: white;
+            color: var(--color-header-text);
             display: block;
             padding: var(--space-sm) 0.75rem;
             position: relative;
@@ -314,7 +347,7 @@
 
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2);
-                color: #ffd54f;
+                color: var(--color-gold);
                 transform: translateY(-2px);
             }
 
@@ -326,9 +359,9 @@
 
     .has-badge {
         &::after {
-            background-color: #b3261e;
+            background-color: var(--color-badge-red);
             border-radius: var(--radius-pill);
-            color: white;
+            color: var(--color-header-text);
             content: attr(data-count);
             font-size: 0.75rem;
             inset-block-start: -0.35rem;
@@ -378,8 +411,7 @@
     }
 }
 
-
-@layer components {
+@layer components.widgets {
     .button,
     button {
         background-color: var(--color-primary);
@@ -417,24 +449,24 @@
     }
 
     .button-light {
-        background-color: white;
-        border-color: white;
-        color: #0f2f73;
+        background-color: var(--color-surface);
+        border-color: var(--color-surface);
+        color: var(--color-primary-strong);
         justify-self: start;
     }
 
     .button-light:hover {
-        background-color: #ffd54f;
-        border-color: #ffd54f;
-        color: #0f2f73;
+        background-color: var(--color-gold);
+        border-color: var(--color-gold);
+        color: var(--color-primary-strong);
     }
 
     .welcome-panel {
         background:
             radial-gradient(circle at 85% 20%, rgba(255, 213, 79, 0.35), transparent 40%),
-            linear-gradient(135deg, #0f2f73, #1b4db3);
+            linear-gradient(135deg, var(--header-start), var(--header-end));
         clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), 0 100%);
-        color: white;
+        color: var(--color-header-text);
         display: grid;
         gap: var(--space-md);
         margin-block-end: var(--space-lg);
@@ -443,7 +475,7 @@
     }
 
     .glass-card {
-        --bar-fill: #ffd54f;
+        --bar-fill: var(--color-gold);
         --bar-track: rgba(255, 255, 255, 0.3);
         background-color: rgba(7, 20, 50, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.35);
@@ -489,10 +521,7 @@
             inline-size: 0;
         }
     }
-}
 
-
-@layer components {
     .stat-grid {
         display: grid;
         gap: var(--space-md);
@@ -523,14 +552,14 @@
         & h3 {
             color: var(--color-text-muted);
             font-size: var(--font-size-small);
-            letter-spacing: 1px;
+            letter-spacing: var(--letter-spacing-wide);
             text-transform: uppercase;
         }
 
         & .stat-number {
             color: var(--card-accent, var(--color-primary));
             font-size: clamp(2rem, 14cqi, 3.5rem);
-            font-weight: bold;
+            font-weight: var(--font-weight-bold);
             line-height: 1;
         }
 
@@ -563,10 +592,7 @@
             grid-column: 1 / -1;
         }
     }
-}
 
-
-@layer components {
     .steps {
         counter-reset: step;
         display: grid;
@@ -594,7 +620,7 @@
                 color: var(--color-on-primary);
                 content: counter(step);
                 display: grid;
-                font-weight: bold;
+                font-weight: var(--font-weight-bold);
                 inline-size: 2.25rem;
                 place-items: center;
             }
@@ -612,8 +638,7 @@
     }
 }
 
-
-@layer components {
+@layer components.table {
     .table-wrapper {
         background-color: var(--color-surface);
         border: 1px solid var(--color-border);
@@ -664,7 +689,7 @@
         color: var(--status-color, var(--color-text-muted));
         display: inline-flex;
         font-size: var(--font-size-small);
-        font-weight: bold;
+        font-weight: var(--font-weight-bold);
         gap: var(--space-sm);
         padding-block: var(--space-xs);
         padding-inline: var(--space-md);
@@ -676,10 +701,10 @@
             content: "";
             inline-size: 0.5rem;
         }
+    }
 
-        &:hover::before {
-            animation-play-state: paused;
-        }
+    .status-badge:hover::before {
+        animation-play-state: paused;
     }
 
     .status-accepted {
@@ -711,8 +736,7 @@
     }
 }
 
-
-@layer components {
+@layer components.form {
     .application-form {
         display: grid;
         gap: var(--space-md);
@@ -730,7 +754,7 @@
     }
 
     label {
-        font-weight: bold;
+        font-weight: var(--font-weight-bold);
     }
 
     :is(.form-field, .check-field):has(:required) label::after {
@@ -799,10 +823,7 @@
         flex-wrap: wrap;
         gap: var(--space-sm);
     }
-}
 
-
-@layer components {
     a[target="_blank"]::after {
         content: " \2197";
     }
@@ -836,21 +857,20 @@
 
     #page-footer {
         background: linear-gradient(135deg, var(--header-start), var(--header-end));
-        color: white;
+        color: var(--color-header-text);
         padding-block: var(--space-lg);
 
         & a {
-            color: #ffd54f;
+            color: var(--color-gold);
             text-decoration: none;
         }
 
         & a:hover {
-            color: white;
+            color: var(--color-header-text);
             text-decoration: underline;
         }
     }
 }
-
 
 @layer utilities {
     .text-center {
@@ -862,16 +882,14 @@
     }
 }
 
-
 @layer overrides {
     @media (prefers-reduced-motion: reduce) {
-
         *,
         *::before,
         *::after {
-            animation: none;
-            scroll-behavior: auto;
-            transition: none;
+            animation: none !important;
+            scroll-behavior: auto !important;
+            transition: none !important;
         }
     }
 
@@ -882,4 +900,3 @@
         }
     }
 }
-

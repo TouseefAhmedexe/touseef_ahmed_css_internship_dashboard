@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Internship application dashboard with sample applications, application steps and a new application form.">
     <meta name="author" content="Touseef Ahmed">
+    <meta name="theme-color" content="#0f2f73">
     <link rel="stylesheet" href="style.css">
     <title>Intern Application Dashboard | Bloomrix</title>
 </head>
@@ -20,7 +21,7 @@
             </div>
         </div>
 
-        <nav id="dashboard-navigation">
+        <nav id="dashboard-navigation" aria-label="Dashboard navigation">
             <ul>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#steps">Steps</a></li>
@@ -129,11 +130,11 @@
 
                         <thead>
                             <tr>
-                                <th>No.</th>
-                                <th>Applicant</th>
-                                <th>Position</th>
-                                <th>Date</th>
-                                <th>Status</th>
+                                <th scope="col">No.</th>
+                                <th scope="col">Applicant</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
 
@@ -193,7 +194,7 @@
                     so sending it reloads the page.
                 </p>
 
-                <form class="application-form panel" id="application-form">
+                <form class="application-form panel" id="application-form" action="#" method="post">
 
                     <div class="form-row">
                         <div class="form-field">
@@ -293,7 +294,7 @@
 
             <h2>Useful Links</h2>
             <ul class="facts-list">
-                <li><a href="https://github.com/TouseefAhmedexe" target="_blank">GitHub profile</a></li>
+                <li><a href="https://github.com/TouseefAhmedexe" target="_blank" rel="noopener noreferrer">GitHub profile</a></li>
                 <li><a href="mailto:touseefahmed9119@gmail.com">Email Touseef</a></li>
             </ul>
         </aside>
@@ -305,10 +306,10 @@
             <address>
                 <strong>Touseef Ahmed</strong><br>
                 <a href="mailto:touseefahmed9119@gmail.com">touseefahmed9119@gmail.com</a><br>
-                <a href="https://github.com/TouseefAhmedexe" target="_blank">github.com/TouseefAhmedexe</a>
+                <a href="https://github.com/TouseefAhmedexe" target="_blank" rel="noopener noreferrer">github.com/TouseefAhmedexe</a>
             </address>
 
-            <p><small>&copy; 2026 Touseef Ahmed</small></p>
+            <p><small>&copy; 2026 Touseef Ahmed. All rights reserved.</small></p>
         </div>
     </footer>
 </body>
