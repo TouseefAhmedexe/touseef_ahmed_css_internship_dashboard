@@ -862,3 +862,24 @@
     }
 }
 
+
+@layer overrides {
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            animation: none;
+            scroll-behavior: auto;
+            transition: none;
+        }
+    }
+
+    @media (prefers-contrast: more) {
+        :root {
+            --color-border: var(--color-text);
+            --color-text-muted: var(--color-text);
+        }
+    }
+}
+
